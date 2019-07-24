@@ -18,9 +18,11 @@ function App() {
   const [teamMembers, setTeamMembers] = useState([])
 
   const [membertoedit, setmembertoedit] = useState({})
+  const [indextoedit, setindextoedit] = useState('')
 
-  function editMember(member) {
+  function editMember(member, index) {
     setmembertoedit(member)
+    setindextoedit(index)
   }
 
   return (
@@ -31,11 +33,11 @@ function App() {
           <p>Name: {member.username} </p>
           <p>Email: {member.email}</p>
           <p>Role: {member.role}</p>
-          <button onClick={() => editMember(member)}>edit</button>
+          <button onClick={() => editMember(member, index)}>edit</button>
         </MemberDiv>
       ))}
       <h3>Add team members</h3>
-      <Forms teamMembers={teamMembers} setTeamMembers = {setTeamMembers} membertoedit={membertoedit}/>
+      <Forms teamMembers={teamMembers} setTeamMembers = {setTeamMembers} membertoedit={membertoedit} indextoedit={indextoedit}/>
     </div>
   );
 }

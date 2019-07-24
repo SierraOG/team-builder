@@ -1,18 +1,36 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 
 function Forms(props){
     // new team member
     const teamMembers = props.teamMembers
     const setTeamMembers = props.setTeamMembers
     const membertoedit = props.membertoedit
+    const indextoedit = props.indextoedit
+    
     const [TeamMember, setUser] = useState({"username": '', "email":'', "role":''})
+    let [isEditing, setIsEditing] = useState(false)
 
+
+    const firstUpdate = useRef(true);
     useEffect(()=>{
+        if (firstUpdate.current) {
+            firstUpdate.current = false;
+            return;
+        }
+        setIsEditing(true)
         setUser(membertoedit)
     }, [membertoedit])
 
     const handleSubmit = event => {
-        setTeamMembers([...teamMembers, TeamMember])
+        if (isEditing){
+            const newMembersaArray = teamMembers.slice() //copy the array
+            newMembersaArray[indextoedit] = TeamMember //change index
+            setTeamMembers(newMembersaArray) // set team members to new updated array 
+            setIsEditing(false)
+        }
+        else{
+            setTeamMembers([...teamMembers, TeamMember])
+        }
         setUser({"username": '', "email":'', "role":''})
         event.preventDefault();
     }
