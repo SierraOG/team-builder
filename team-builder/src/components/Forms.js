@@ -1,10 +1,15 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 function Forms(props){
     // new team member
     const teamMembers = props.teamMembers
     const setTeamMembers = props.setTeamMembers
+    const membertoedit = props.membertoedit
     const [TeamMember, setUser] = useState({"username": '', "email":'', "role":''})
+
+    useEffect(()=>{
+        setUser(membertoedit)
+    }, [membertoedit])
 
     const handleSubmit = event => {
         setTeamMembers([...teamMembers, TeamMember])
