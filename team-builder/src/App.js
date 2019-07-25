@@ -36,7 +36,6 @@ function App() {
           <button onClick={() => editMember(member, index)}>edit</button>
         </MemberDiv>
       ))}
-      <h3>Add team members</h3>
       <Forms teamMembers={teamMembers} setTeamMembers = {setTeamMembers} membertoedit={membertoedit} indextoedit={indextoedit}/>
     </div>
   );

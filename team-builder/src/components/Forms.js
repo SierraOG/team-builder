@@ -1,32 +1,27 @@
+
 import React, {useEffect, useRef, useState} from 'react'
 
-function Forms(props){
+function Forms({teamMembers, setTeamMembers, membertoedit, indextoedit}){
     // new team member
-    const teamMembers = props.teamMembers
-    const setTeamMembers = props.setTeamMembers
-    const membertoedit = props.membertoedit
-    const indextoedit = props.indextoedit
-    
     const [TeamMember, setUser] = useState({"username": '', "email":'', "role":''})
-    let [isEditing, setIsEditing] = useState(false)
 
-
+    const isEditing = useRef(false)
     const firstUpdate = useRef(true);
     useEffect(()=>{
         if (firstUpdate.current) {
             firstUpdate.current = false;
             return;
         }
-        setIsEditing(true)
+        isEditing.current = true
         setUser(membertoedit)
     }, [membertoedit])
 
     const handleSubmit = event => {
-        if (isEditing){
+        if (isEditing.current){
             const newMembersaArray = teamMembers.slice() //copy the array
             newMembersaArray[indextoedit] = TeamMember //change index
             setTeamMembers(newMembersaArray) // set team members to new updated array 
-            setIsEditing(false)
+            isEditing.current = false
         }
         else{
             setTeamMembers([...teamMembers, TeamMember])
@@ -42,6 +37,7 @@ function Forms(props){
 
     return(
         <div>
+            {(isEditing.current === true) ? <h3>Edit a member</h3> : <h3>Add a member</h3>}
             <form onSubmit={(event) => handleSubmit(event)}>
             <label>
                 Name:
